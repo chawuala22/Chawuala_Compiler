@@ -3,6 +3,7 @@ from tkinter import scrolledtext as st
 import sys
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
+import basic
 
 class Aplicacion:
     
@@ -30,14 +31,13 @@ class Aplicacion:
         opciones2.add_command(label="Compilar Programa", command=self.compilar)
         
         menubar1.add_cascade(label="Compilador", menu=opciones2)
-         
-        
+            
     
     def salir(self):
         sys.exit()
 
     def guardar(self):
-        self.nombrearch=fd.asksaveasfilename(initialdir = "/",title = "Guardar como",filetypes = (("dan files","*.dan"),("todos los archivos","*.*")))
+        self.nombrearch=fd.asksaveasfilename(initialdir = "/",title = "Guardar como",filetypes = (("dan files",".dan"),("todos los archivos","*.*")))
         if self.nombrearch!='':
             archi1=open(self.nombrearch, "w", encoding="utf-8")
             archi1.write(self.scrolledtext1.get("1.0", tk.END))
@@ -56,12 +56,19 @@ class Aplicacion:
         
         if self.nombrearch!='':
             archi1=open(self.nombrearch, "r", encoding="utf-8")
+            for linea in archi1.readlines():
+                shell(linea)
             contenido=archi1.read()
             archi1.close()
             self.scrolledtext1.delete("1.0", tk.END) 
             self.scrolledtext1.insert("1.0", contenido)
-            return contenido 
-        
+            
+    def shell(self,text):
+        while True:
+        #text = input()
+        result, error = basic.run('<stdin>', text)
 
-
-aplicacion1=Aplicacion() 
+        if error: print(error.as_string())
+        elif result: print(result)
+        break
+aplicacion1=Aplicacion()
