@@ -5,7 +5,15 @@ import sys
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
 import basic
+from tkinter import *
+from tkinter import messagebox as MessageBox
 
+def main(text,ventana1):
+	result, error = basic.run('<stdin>', text)
+
+	if error: MessageBox.showerror("Compilador",error.as_string())
+	elif result: MessageBox.showinfo("Compilador",result)
+        
 class Aplicacion:
     
     def __init__(self):
@@ -15,6 +23,8 @@ class Aplicacion:
         self.scrolledtext1=st.ScrolledText(self.ventana1, width=80, height=20)
         self.scrolledtext1.grid(column=0,row=0, padx=10, pady=10)        
         self.nombrearch = ""
+        
+        #MessageBox.showwarning("Compilador","holiwis we")
         self.ventana1.mainloop()
         
 
@@ -53,27 +63,24 @@ class Aplicacion:
             archi1.close()
             self.scrolledtext1.delete("1.0", tk.END) 
             self.scrolledtext1.insert("1.0", contenido)
+
     def compilar(self):
         
         if self.nombrearch!='':
-            archi1=open(self.nombrearch, "r", encoding="utf-8")
+
+            ruta=self.nombrearch
+            ruta=ruta.replace("C:/","/")
+            archi1=open(ruta, "r")
+            
+            contenido=""
             for linea in archi1.readlines():
-				ab=linea
-				print(ab)
-                main(linea)
-            contenido=archi1.read()
+                if(linea !="\n"):
+                    main(linea,self.ventana1)
+                    contenido=contenido+linea
+            
             archi1.close()
             self.scrolledtext1.delete("1.0", tk.END) 
             self.scrolledtext1.insert("1.0", contenido)
-
-
-def main(text):
-	
-	result, error = basic.run('<stdin>', text)
-
-	if error: print(error.as_string())
-	elif result: print(result)
-
 
 
 
