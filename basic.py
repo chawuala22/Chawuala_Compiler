@@ -123,8 +123,8 @@ KEYWORDS = [
 	'bada',
 	'elif',
 	'bestela',
-	'FOR',
-	'TO',
+	'egiteko',
+	'to',
 	'STEP',
 	'bitartean',
 	'gevo'
@@ -485,10 +485,10 @@ class Parser:
 	def for_expr(self):
 		res = ParseResult()
 
-		if not self.current_tok.matches(TT_KEYWORD, 'FOR'):
+		if not self.current_tok.matches(TT_KEYWORD, 'egiteko'):
 			return res.failure(InvalidSyntaxError(
 				self.current_tok.pos_start, self.current_tok.pos_end,
-				f"Se espera... 'FOR'"
+				f"Se espera... 'egiteko'"
 			))
 
 		res.register_advancement()
@@ -516,10 +516,10 @@ class Parser:
 		start_value = res.register(self.expr())
 		if res.error: return res
 
-		if not self.current_tok.matches(TT_KEYWORD, 'TO'):
+		if not self.current_tok.matches(TT_KEYWORD, 'to'):
 			return res.failure(InvalidSyntaxError(
 				self.current_tok.pos_start, self.current_tok.pos_end,
-				f"Se espera... 'TO'"
+				f"Se espera... 'to'"
 			))
 		
 		res.register_advancement()
@@ -614,7 +614,7 @@ class Parser:
 			if res.error: return res
 			return res.success(if_expr)
 
-		elif tok.matches(TT_KEYWORD, 'FOR'):
+		elif tok.matches(TT_KEYWORD, 'egiteko'):
 			for_expr = res.register(self.for_expr())
 			if res.error: return res
 			return res.success(for_expr)

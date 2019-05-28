@@ -1,5 +1,6 @@
 if---bada
 then---gevo
 while---bitartean
+for---egiteko
 else---bestela
 var---aldagai

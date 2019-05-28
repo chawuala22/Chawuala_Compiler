@@ -23,7 +23,7 @@ if-expr			: KEYWORD:bada expr KEYWORD:gevo expr
 							(KEYWORD:elif expr KEYWORD:gevo expr)*
 							(KEYWORD:bestela expr)?
 
-for-expr		: KEYWORD:FOR IDENTIFIER EQ expr KEYWORD:TO expr 
+for-expr		: KEYWORD:egiteko IDENTIFIER EQ expr KEYWORD:to expr 
 							(KEYWORD:STEP expr)? KEYWORD:gevo expr
 
 while-expr	: KEYWORD:bitartean expr KEYWORD:gevo expr
