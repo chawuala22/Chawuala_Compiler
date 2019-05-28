@@ -45,7 +45,7 @@ class Aplicacion:
         compilador.place(x=530,y=10)
         compilador.config(relief="raised",bg="#6BA4FF")
         self.nombrearch = ""
-        
+
         self.ventana1.mainloop()
         
 
@@ -53,7 +53,8 @@ class Aplicacion:
         menubar1 = tk.Menu(self.ventana1)
         self.ventana1.config(menu=menubar1)
         opciones1 = tk.Menu(menubar1, tearoff=0)
-        opciones1.add_command(label="Guardar archivo", command=self.guardar)
+        opciones1.add_command(label="Guardar", command=self.guardar)
+        opciones1.add_command(label="Guardar como", command=self.guardar_como)
         opciones1.add_command(label="Abrir archivo", command=self.cargar)
         opciones1.add_separator()
         opciones1.add_command(label="Salir", command=self.salir)
@@ -67,9 +68,17 @@ class Aplicacion:
     
     def salir(self):
         sys.exit()
-
     def guardar(self):
-        self.nombrearch=fd.asksaveasfilename(initialdir = "/",title = "Guardar como",filetypes = (("dan files",".dan"),("todos los archivos","*.*")))
+        if self.nombrearch!='':
+            archi1=open(self.nombrearch, "w", encoding="utf-8")
+            archi1.write(self.scrolledtext1.get("1.0", tk.END))
+            archi1.close()
+            mb.showinfo("Información", "Los datos fueron guardados en el archivo.")
+        else:
+            self.guardar_como()
+            
+    def guardar_como(self):
+        self.nombrearch=fd.asksaveasfilename(initialdir = "/",title = "Guardar como",defaultextension=".dan",filetypes = (("dan files",".dan"),("todos los archivos","*.*")))
         if self.nombrearch!='':
             archi1=open(self.nombrearch, "w", encoding="utf-8")
             archi1.write(self.scrolledtext1.get("1.0", tk.END))
@@ -86,16 +95,16 @@ class Aplicacion:
             self.scrolledtext1.insert("1.0", contenido)
 
     def compilar(self):
-        
+         
         if self.nombrearch!='':
 
             ruta=self.nombrearch
             ruta=ruta.replace("C:/","/")
             archi1=open(ruta, "r")
-            
             contenido=""
             self.scrolledtext2.config(state=NORMAL)
-            
+          
+
             for linea in archi1.readlines():
                 if(linea !="\n"):
                     validar_linea(linea,self.scrolledtext2)
