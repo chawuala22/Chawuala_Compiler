@@ -1,4 +1,4 @@
-expr				: KEYWORD:VAR IDENTIFIER EQ expr
+expr				: KEYWORD:aldagai IDENTIFIER EQ expr
 						: comp-expr ((KEYWORD:AND|KEYWORD:OR) comp-expr)*
 
 comp-expr		: NOT comp-expr
@@ -19,11 +19,11 @@ atom 				: INT|FLOAT|IDENTIFIER
 						: for-expr
 						: while-expr
 
-if-expr			: KEYWORD:IF expr KEYWORD:THEN expr
-							(KEYWORD:ELIF expr KEYWORD:THEN expr)*
-							(KEYWORD:ELSE expr)?
+if-expr			: KEYWORD:bada expr KEYWORD:gevo expr
+							(KEYWORD:elif expr KEYWORD:gevo expr)*
+							(KEYWORD:bestela expr)?
 
 for-expr		: KEYWORD:FOR IDENTIFIER EQ expr KEYWORD:TO expr 
-							(KEYWORD:STEP expr)? KEYWORD:THEN expr
+							(KEYWORD:STEP expr)? KEYWORD:gevo expr
 
-while-expr	: KEYWORD:WHILE expr KEYWORD:THEN expr
+while-expr	: KEYWORD:bitartean expr KEYWORD:gevo expr

@@ -8,23 +8,44 @@ import basic
 from tkinter import *
 from tkinter import messagebox as MessageBox
 
-def main(text,ventana1):
-	result, error = basic.run('<stdin>', text)
+def validar_linea(text,cuadro_text):
 
-	if error: MessageBox.showerror("Compilador",error.as_string())
-	elif result: MessageBox.showinfo("Compilador",result)
-        
+	result, error = basic.run('<stdin>', text)
+	if error:  MessageBox.showerror("Compilador",error.as_string()+"en la  linea")
+	if result: cuadro_text.insert (END, result)
+
 class Aplicacion:
     
     def __init__(self):
         self.ventana1=tk.Tk()
         self.agregar_menu()
         self.ventana1.title("Chawala compiler")
-        self.scrolledtext1=st.ScrolledText(self.ventana1, width=80, height=20)
-        self.scrolledtext1.grid(column=0,row=0, padx=10, pady=10)        
+        self.ventana1.geometry("730x380")
+        self.ventana1.resizable(0,0)
+        self.ventana1.config(bg="#2e466d")
+        self.scrolledtext1=st.ScrolledText(self.ventana1, width=50, height=20)
+        self.scrolledtext2=st.ScrolledText(self.ventana1, width=30, height=20)
+        
+        self.scrolledtext1.config(bg="#1F304A",fg="white")
+        self.scrolledtext2.config(state=DISABLED,bg="#1F304A",fg="white")
+        
+        self.scrolledtext1.grid(column=0,row=0, padx=20, pady=10)     
+        self.scrolledtext2.grid(column=0,row=0, padx=20, pady=10,sticky=N+E)
+
+        self.scrolledtext2.place(x=450,y=40)
+        self.scrolledtext1.place(x=10,y=40)
+        
+        texto = Label(self.ventana1, text="Editor",font=("Helvetica", 12))
+        texto.pack()
+        texto.place(x=180,y=10)
+        texto.config(relief="raised",bg="#6BA4FF")
+
+        compilador = Label(self.ventana1, text="Compilador",font=("Helvetica", 12))
+        compilador.pack()
+        compilador.place(x=530,y=10)
+        compilador.config(relief="raised",bg="#6BA4FF")
         self.nombrearch = ""
         
-        #MessageBox.showwarning("Compilador","holiwis we")
         self.ventana1.mainloop()
         
 
@@ -73,15 +94,17 @@ class Aplicacion:
             archi1=open(ruta, "r")
             
             contenido=""
+            self.scrolledtext2.config(state=NORMAL)
+            
             for linea in archi1.readlines():
                 if(linea !="\n"):
-                    main(linea,self.ventana1)
+                    validar_linea(linea,self.scrolledtext2)
                     contenido=contenido+linea
+                    self.scrolledtext2.insert(END,'\n')
             
+            self.scrolledtext2.config(state=DISABLED)
             archi1.close()
             self.scrolledtext1.delete("1.0", tk.END) 
             self.scrolledtext1.insert("1.0", contenido)
-
-
 
 aplicacion1=Aplicacion()
