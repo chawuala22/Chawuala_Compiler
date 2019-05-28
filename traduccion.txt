@@ -1,0 +1,5 @@
+if---bada
+then---gevo
+while---bitartean
+else---bestela
+var---aldagai
